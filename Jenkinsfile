@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         // Define tools needed for the build
-        jdk 'Java 7'
+        jdk 'Java 17'
     }
 
     stages {
