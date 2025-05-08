@@ -2,34 +2,57 @@ pipeline {
     agent any
 
     tools {
-        // Define tools needed for the build
-        jdk 'Java 17'
+        jdk 'JDK 11'
+    }
+
+    environment {
+        ENV = 'hello welcome'
     }
 
     stages {
-        stage('Build') {
+        stage('Practice') {
             steps {
-                echo 'Building the project...'
+                echo 'Practicing the declarative scripting'
             }
         }
 
-        stage('Test') {
-            steps {
-                echo 'Running tests...'
+        stage('Parallel Tests') {
+            parallel {
+                stage('T1') {
+                    steps {
+                        echo 'running test1'
+                    }
+                }
+                stage('T2') {
+                    steps {
+                        echo 'running test2'
+                    }
+                }
             }
         }
 
-        stage('Deploy') {
+        stage('Environment Echo') {
             steps {
-                echo 'Deploying the application...'
+                echo "${ENV} to Jenkins"
+            }
+        }
+
+        stage('Manual Approval') {
+            steps {
+                input message: 'Is it successful?', ok: 'Yes'
             }
         }
     }
 
     post {
+        success {
+            echo 'Pipeline success'
+        }
+        failure {
+            echo 'Something is wrong'
+        }
         always {
-            echo 'Cleaning up...'
-            // Cleanup steps (if any)
+            echo 'Make sure it works properly'
         }
     }
 }
